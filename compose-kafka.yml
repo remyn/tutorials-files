@@ -1,0 +1,16 @@
+zookeeper:
+  image: bobrik/zookeeper
+  net: host
+  environment:
+    ZK_CONFIG: tickTime=2000,initLimit=10,syncLimit=5,maxClientCnxns=128,forceSync=no,clientPort=2181
+    ZK_ID: " 1"
+
+kafka:
+  image: wurstmeister/kafka
+  ports:
+    - "9092"
+  environment:
+    KAFKA_ZOOKEEPER_CONNECT: ${DOCKER_IP}:2181
+    KAFKA_ADVERTISED_HOST_NAME: ${DOCKER_IP}
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
